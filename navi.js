@@ -7,7 +7,7 @@
  */
 
 
-var validation = function() {
+var jsNavi = function() {
 
   var jsonValidate = function(jsonObj, exps) {
    var eq = null;
@@ -52,7 +52,13 @@ var validation = function() {
   return {
     startValidation: function(json, expression) {
       try {
-        var data = JSON.parse(json);
+        var data=null;
+        if (typeof json == 'string' || json instanceof String){
+          data = JSON.parse(json);
+        }else{
+          data=json
+        }
+        
         var _out = jsonValidate(data, expression);
       } catch (er) {
         _out=null;
