@@ -11,11 +11,26 @@ var jsNavi = function() {
 
   var jsonValidate = function(jsonObj, exps) {
    var eq = null;
+   var op = null;
+   
+   var evaluate =function(l,r,o){
+     switch(o){
+               case '=': return l==r;
+               case '!=': return l!=r;
+               case '>' : return l>r;
+               case '<': return l<r;
+             } 
+     
+   }
+   
+   
+   
     if (exps) {
       //(^.+)(=)(.+$)
-       var matchMain = new RegExp("(^.+)(=)(.+$)").exec(exps);
+       var matchMain = new RegExp("(^.+?)(\!=|=|>|<)(.+$)").exec(exps);
        if ((matchMain !== null) && (matchMain.length == 4)) {
          exps=matchMain[1];
+         op=matchMain[2];
          eq=matchMain[3];
        } 
        
@@ -38,10 +53,11 @@ var jsNavi = function() {
        if (eq!=null) {
             match = new RegExp("(^true$)|(^false$)|(^[0-9]*\.?[0-9]*$)").exec(eq);
            if ((match !== null) && (match.length == 4)) {
+             jsonObj = evaluate(jsonObj,JSON.parse(match[1]!== undefined?match[1]:(match[2]!== undefined?match[2]:match[3])),op);
+             
               
-             jsonObj = jsonObj == JSON.parse(match[1]!== undefined?match[1]:(match[2]!== undefined?match[2]:match[3]));
            }else{
-             jsonObj = jsonObj ==eq;
+             jsonObj = evaluate(jsonObj,eq,op);
            }
        }
       
