@@ -1,6 +1,6 @@
 /**
  * @author Vishal Joshi
- * @desc this is small utility for validating the json and parsing it 
+ * @desc this is small utility for validating the json and parsing it
  *
  */
 
@@ -9,6 +9,7 @@
 
 
 var jsonParser = function() {
+  
 
   var jsonValidate = function(jsonObj, exps) {
     if (exps) {
